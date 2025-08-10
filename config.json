@@ -1,0 +1,71 @@
+
+{
+  "app": {
+    "name": "SCCafé",
+    "version": "2.1.0",
+    "description": "CREATE2 Token Factory - Sistema para criação de tokens com endereços personalizados",
+    "author": "SCCafé Team",
+    "website": "https://sccafe.com"
+  },
+  "theme": {
+    "colors": {
+      "primary": "#D4A574",
+      "primaryDark": "#B8935F", 
+      "secondary": "#1a1a1a",
+      "background": "#0a0a0a",
+      "backgroundLight": "#1a1a1a",
+      "text": "#ffffff",
+      "textMuted": "#cccccc",
+      "success": "#10b981",
+      "error": "#ef4444",
+      "warning": "#f59e0b",
+      "border": "#333333"
+    }
+  },
+  "networks": {
+    "supported": [
+      {
+        "id": "bsc-testnet",
+        "name": "BSC Testnet",
+        "chainId": 97,
+        "rpc": "https://data-seed-prebsc-1-s1.binance.org:8545/",
+        "explorer": "https://testnet.bscscan.com",
+        "currency": "tBNB",
+        "isTestnet": true
+      },
+      {
+        "id": "bsc-mainnet", 
+        "name": "BSC Mainnet",
+        "chainId": 56,
+        "rpc": "https://bsc-dataseed.binance.org/",
+        "explorer": "https://bscscan.com",
+        "currency": "BNB",
+        "isTestnet": false
+      }
+    ],
+    "popular": [
+      {
+        "id": "ethereum",
+        "name": "Ethereum",
+        "chainId": 1,
+        "currency": "ETH"
+      },
+      {
+        "id": "polygon",
+        "name": "Polygon",
+        "chainId": 137,
+        "currency": "MATIC"
+      },
+      {
+        "id": "avalanche", 
+        "name": "Avalanche",
+        "chainId": 43114,
+        "currency": "AVAX"
+      }
+    ]
+  },
+  "wallets": {
+    "supported": ["metamask", "trustwallet", "walletconnect"],
+    "popular": ["metamask", "trustwallet", "binance", "coinbase", "phantom"]
+  }
+}

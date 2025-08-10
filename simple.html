@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCCafé - CREATE2 Token Factory</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: #0a0a0a; 
+            color: #ffffff; 
+            overflow: hidden;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-content { text-align: center; }
+        
+        .logo-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .logo-loading .logo-icon {
+            width: 48px; height: 48px;
+            background: #D4A574;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            animation: pulse 2s infinite;
+        }
+        
+        .logo-loading .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #D4A574;
+        }
+        
+        .spinner {
+            width: 40px; height: 40px;
+            border: 3px solid #333;
+            border-top: 3px solid #D4A574;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .hidden { display: none !important; }
+        
+        /* Main Content */
+        .main-content {
+            padding: 80px 20px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #333;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+        }
+        
+        .logo .logo-icon {
+            width: 32px; height: 32px;
+            background: #D4A574;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+        }
+        
+        .logo .logo-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #D4A574;
+        }
+        
+        .version-badge {
+            background: #D4A574;
+            color: #0a0a0a;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 32px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ccc;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: #D4A574;
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .connect-wallet-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #D4A574;
+            color: #0a0a0a;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .connect-wallet-btn:hover {
+            background: #B8935F;
+        }
+        
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+        
+        .text-primary { color: #D4A574; }
+        .text-gradient {
+            background: linear-gradient(135deg, #D4A574, #B8935F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            color: #ccc;
+            margin-bottom: 32px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #D4A574;
+            color: #0a0a0a;
+        }
+        
+        .btn-primary:hover {
+            background: #B8935F;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: #D4A574;
+            border: 2px solid #D4A574;
+        }
+        
+        .btn-outline:hover {
+            background: #D4A574;
+            color: #0a0a0a;
+        }
+        
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .hero-title { font-size: 32px; }
+            .header-content { padding: 12px 16px; }
+            .main-content { padding: 60px 16px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="logo-loading">
+                <div class="logo-icon">☕</div>
+                <span class="logo-text">SCCafé</span>
+            </div>
+            <div class="spinner"></div>
+            <p>Carregando plataforma...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="mainHeader" class="header hidden">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">☕</div>
+                <span class="logo-text">SCCafé</span>
+                <span class="version-badge">v2.1.0</span>
+            </div>
+            
+            <nav class="nav">
+                <a href="#home" class="nav-link active">
+                    🏠 <span>Início</span>
+                </a>
+                <a href="#create" class="nav-link">
+                    ➕ <span>Criar Token</span>
+                </a>
+                <a href="#contracts" class="nav-link">
+                    📄 <span>Contratos</span>
+                </a>
+                <a href="#admin" class="nav-link">
+                    ⚙️ <span>Admin</span>
+                </a>
+            </nav>
+            
+            <div class="header-actions">
+                <button class="connect-wallet-btn" onclick="connectWallet()">
+                    💼 Conectar Carteira
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="mainContent" class="main-content hidden">
+        <section class="hero-section">
+            <h1 class="hero-title">
+                Crie <span class="text-primary">Tokens</span> com 
+                <span class="text-gradient">Endereços Determinísticos</span>
+            </h1>
+            
+            <p class="hero-description">
+                Plataforma avançada para criação de tokens ERC20/BEP20 usando tecnologia CREATE2,
+                permitindo endereços previsíveis e customizados na BSC Testnet e Mainnet.
+            </p>
+            
+            <div style="display: flex; gap: 16px; margin-top: 32px;">
+                <button class="btn btn-primary" onclick="showCreateToken()">
+                    ➕ Criar Meu Token
+                </button>
+                <button class="btn btn-outline" onclick="showAdmin()">
+                    ⚙️ Painel Admin
+                </button>
+            </div>
+            
+            <div style="margin-top: 48px; padding: 24px; background: #1a1a1a; border-radius: 12px; border: 1px solid #333;">
+                <h3 style="color: #D4A574; margin-bottom: 16px;">🚀 Recursos Principais:</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div>✅ CREATE2 Factory</div>
+                    <div>✅ Endereços Previsíveis</div>
+                    <div>✅ Código Verificado</div>
+                    <div>✅ BSC Testnet & Mainnet</div>
+                    <div>✅ MetaMask Integration</div>
+                    <div>✅ Multi-idioma (PT/EN/CH)</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        console.log('🚀 Iniciando SCCafé...');
+        
+        // Simular loading por 2 segundos
+        setTimeout(() => {
+            console.log('✅ Loading concluído, mostrando interface...');
+            
+            // Esconder loading
+            document.getElementById('loadingScreen').classList.add('hidden');
+            
+            // Mostrar conteúdo principal
+            document.getElementById('mainHeader').classList.remove('hidden');
+            document.getElementById('mainContent').classList.remove('hidden');
+            document.body.style.overflow = 'auto';
+            
+        }, 2000);
+        
+        function connectWallet() {
+            alert('🔗 Conectar com MetaMask será implementado em breve!\n\nRecursos planejados:\n• Suporte BSC Testnet/Mainnet\n• Integração CREATE2\n• Interface para criação de tokens');
+        }
+        
+        function showCreateToken() {
+            alert('🪙 Funcionalidade de criação de token em desenvolvimento!\n\nRecursos:\n• Factory CREATE2\n• Endereços determinísticos\n• Verificação automática\n• Compilação Solidity');
+        }
+        
+        function showAdmin() {
+            window.open('admin.html', '_blank');
+        }
+        
+        // Log para debug
+        window.addEventListener('load', () => {
+            console.log('🔧 Página carregada completamente');
+        });
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('📄 DOM carregado');
+        });
+    </script>
+</body>
+</html>

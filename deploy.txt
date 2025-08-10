@@ -1,0 +1,96 @@
+
+=== INSTRUÇÕES DE DEPLOY - SCCafé HTML ===
+
+🎯 VERSÃO SIMPLIFICADA PRONTA PARA USO!
+
+Este sistema é 100% em HTML, CSS e JavaScript puro.
+Não precisa de Node.js, Next.js ou configurações complexas.
+
+📁 ARQUIVOS INCLUÍDOS:
+- index.html (página principal)
+- css/style.css (estilos modernos)
+- js/app.js (lógica principal)
+- js/web3.js (integração Web3/CREATE2)
+- js/translations.js (multi-idioma PT/EN/ZH)
+- contracts/TokenFactory.sol (contrato CREATE2)
+- README.md (documentação completa)
+
+🚀 COMO FAZER DEPLOY:
+
+1. SERVIDOR WEB SIMPLES:
+   - Copie todos os arquivos para seu servidor
+   - Funciona em Apache, Nginx, IIS
+   - Acesse via browser: https://seudominio.com
+
+2. TESTE LOCAL:
+   - Abra terminal na pasta do projeto
+   - Execute: python -m http.server 8000
+   - Acesse: http://localhost:8000
+
+3. GITHUB PAGES:
+   - Suba arquivos para repositório GitHub
+   - Configure Pages na aba Settings
+   - Deploy automático
+
+4. NETLIFY/VERCEL:
+   - Drag & drop da pasta no site
+   - Deploy instantâneo com HTTPS
+
+🔧 CONFIGURAÇÃO WEB3:
+
+1. Deploy o contrato TokenFactory.sol na BSC Testnet
+2. Atualize o endereço em js/web3.js:
+   this.factoryAddress = 'SEU_ENDERECO_AQUI';
+3. Pronto para usar!
+
+⚡ VANTAGENS DESTA VERSÃO:
+
+✅ Deploy em QUALQUER servidor
+✅ Sem dependências complexas
+✅ Manutenção super fácil
+✅ Performance otimizada
+✅ SEO friendly
+✅ Mobile responsive
+✅ Código limpo e documentado
+
+🎨 DESIGN IMPLEMENTADO:
+
+✅ Tema escuro inspirado ChatGPT 5
+✅ Destaques dourados/mostarda
+✅ Alertas em vermelho
+✅ Multi-idioma (PT/EN/ZH)
+✅ Animações suaves
+✅ Interface intuitiva
+
+🔐 FUNCIONALIDADES:
+
+✅ Conexão MetaMask/Trust Wallet
+✅ Criação tokens CREATE2
+✅ Dashboard interativo
+✅ Painel admin
+✅ Sistema de notificações
+✅ Endereços determinísticos
+✅ Preview em tempo real
+
+📱 100% RESPONSIVO:
+
+✅ Desktop otimizado
+✅ Mobile friendly
+✅ Tablet compatível
+✅ Touch gestures
+
+🌐 COMPATIBILIDADE:
+
+✅ Todos os browsers modernos
+✅ Chrome, Firefox, Safari, Edge
+✅ iOS/Android WebView
+✅ Progressive Web App ready
+
+=== CONCLUSÃO ===
+
+Este sistema SCCafé está COMPLETO e FUNCIONAL.
+É a versão mais simples e fácil de manter que você pediu.
+
+Faça o deploy em qualquer lugar e comece a usar imediatamente!
+
+🎯 Status: PRONTO PARA PRODUÇÃO ✅
