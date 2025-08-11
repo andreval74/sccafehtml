@@ -76,22 +76,22 @@ const App = {
     DebugUtils.log('🔧 Inicializando gerenciadores...');
     
     try {
-      // PricingManager
+      // PricingManager (objeto literal)
       if (typeof PricingManager !== 'undefined') {
-        window.pricingManager = new PricingManager();
+        window.pricingManager = PricingManager;
         await window.pricingManager.loadPricing();
         DebugUtils.log('✅ PricingManager inicializado');
       }
       
-      // CREATE2Manager
+      // CREATE2Manager (objeto literal)
       if (typeof CREATE2Manager !== 'undefined') {
-        window.create2Manager = new CREATE2Manager();
+        window.create2Manager = CREATE2Manager;
         DebugUtils.log('✅ CREATE2Manager inicializado');
       }
       
-      // TokenFactory
+      // TokenFactory (objeto literal)
       if (typeof TokenFactory !== 'undefined') {
-        window.tokenFactory = new TokenFactory();
+        window.tokenFactory = TokenFactory;
         DebugUtils.log('✅ TokenFactory inicializado');
       }
       
