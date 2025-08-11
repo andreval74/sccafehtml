@@ -79,7 +79,7 @@ const App = {
       // PricingManager (objeto literal)
       if (typeof PricingManager !== 'undefined') {
         window.pricingManager = PricingManager;
-        await window.pricingManager.loadPricing();
+        await window.pricingManager.init();
         DebugUtils.log('✅ PricingManager inicializado');
       }
       

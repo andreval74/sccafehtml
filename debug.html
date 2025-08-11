@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - SCCafé</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: #0a0a0a; 
+            color: #fff;
+        }
+        .debug-section {
+            border: 2px solid #333;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .debug-title {
+            color: #ffd700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .error { color: #ff4444; }
+        .success { color: #44ff44; }
+        .warning { color: #ffaa44; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Debug SCCafé</h1>
+    
+    <div class="debug-section">
+        <div class="debug-title">📋 Informações da Página</div>
+        <div>URL: <span id="currentUrl"></span></div>
+        <div>Página: <span id="currentPage"></span></div>
+        <div>Hash: <span id="currentHash"></span></div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">📦 Scripts Carregados</div>
+        <div id="loadedScripts"></div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">🎯 Elementos Visíveis</div>
+        <div id="visibleElements"></div>
+    </div>
+    
+    <div class="debug-section">
+        <div class="debug-title">⚠️ Erros de Console</div>
+        <div id="consoleErrors"></div>
+    </div>
+    
+    <script>
+        // Informações da página
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('currentPage').textContent = window.location.pathname;
+        document.getElementById('currentHash').textContent = window.location.hash || 'Nenhum';
+        
+        // Scripts carregados
+        const scripts = Array.from(document.querySelectorAll('script[src]'));
+        document.getElementById('loadedScripts').innerHTML = scripts.map(s => 
+            `<div>✅ ${s.src}</div>`
+        ).join('');
+        
+        // Elementos visíveis
+        setTimeout(() => {
+            const sections = Array.from(document.querySelectorAll('section, .main-content, .hero-section'));
+            document.getElementById('visibleElements').innerHTML = sections.map(el => {
+                const style = window.getComputedStyle(el);
+                const visible = style.display !== 'none' && style.visibility !== 'hidden';
+                return `<div class="${visible ? 'success' : 'warning'}">
+                    ${visible ? '👁️' : '🙈'} ${el.tagName} ${el.id ? '#' + el.id : ''} ${el.className ? '.' + el.className.split(' ').join('.') : ''}
+                </div>`;
+            }).join('');
+        }, 1000);
+        
+        // Capturar erros
+        const errors = [];
+        window.addEventListener('error', (e) => {
+            errors.push(`❌ ${e.message} (${e.filename}:${e.lineno})`);
+            updateErrors();
+        });
+        
+        function updateErrors() {
+            document.getElementById('consoleErrors').innerHTML = errors.length > 0 
+                ? errors.join('<br>') 
+                : '<div class="success">✅ Nenhum erro detectado</div>';
+        }
+        
+        updateErrors();
+    </script>
+</body>
+</html>
