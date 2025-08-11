@@ -1,0 +1,36 @@
+﻿===============================================
+SCCafÃ© - INSTRUÃ‡Ã•ES DE INSTALAÃ‡ÃƒO
+===============================================
+
+PASSO 1: UPLOAD
+- FaÃ§a upload de TODOS os arquivos desta pasta para seu servidor
+- Mantenha a estrutura de pastas
+
+PASSO 2: CONFIGURAR WEB3 (OBRIGATÃ“RIO)
+- Acesse https://remix.ethereum.org/
+- Abra contracts/TokenFactory.sol
+- Compile e faÃ§a deploy na BSC Testnet
+- Anote o endereÃ§o do contrato
+- Edite assets/js/web3.js
+- Substitua 'SEU_ENDERECO_AQUI' pelo endereÃ§o real
+
+PASSO 3: TESTAR
+- Acesse https://seudominio.com
+- Conecte MetaMask (BSC Testnet)
+- Teste criar um token
+
+PROBLEMAS COMUNS:
+- CSS nÃ£o carrega: verifique permissÃµes
+- Web3 erro: configure endereÃ§o do contrato
+- Gas error: tenha tBNB na carteira
+
+ARQUIVOS IMPORTANTES:
+- index.html (pÃ¡gina principal)
+- admin.html (painel admin)
+- assets/ (CSS, JS, imagens)
+- contracts/ (smart contracts)
+
+SUPORTE:
+- Use F12 > Console para debug
+- Teste sempre em BSC Testnet primeiro
+- Verifique se estÃ¡ usando HTTPS

@@ -1,0 +1,81 @@
+
+<!-- Header Reutilizável -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <i data-lucide="coffee"></i>
+                </div>
+                <span class="logo-text">SCCafé</span>
+                <span class="version-badge" id="headerVersion">v2.1.0</span>
+            </div>
+            
+            <!-- Navegação -->
+            <nav class="nav">
+                <a href="#home" class="nav-link active" data-page="home">
+                    <i data-lucide="home"></i>
+                    <span data-lang="nav.home">Início</span>
+                </a>
+                <a href="#create" class="nav-link" data-page="create">
+                    <i data-lucide="plus-circle"></i>
+                    <span data-lang="nav.create">Criar Token</span>
+                </a>
+                <a href="#dashboard" class="nav-link" data-page="dashboard">
+                    <i data-lucide="bar-chart-3"></i>
+                    <span data-lang="nav.dashboard">Dashboard</span>
+                </a>
+                <a href="#services" class="nav-link" data-page="services">
+                    <i data-lucide="wrench"></i>
+                    <span data-lang="nav.services">Serviços</span>
+                </a>
+            </nav>
+
+            <!-- Ações do Header -->
+            <div class="header-actions">
+                <!-- Seletor de Idioma -->
+                <div class="language-selector">
+                    <button class="lang-btn" id="languageToggle">
+                        <i data-lucide="globe"></i>
+                        <span id="currentLang">PT</span>
+                        <i data-lucide="chevron-down"></i>
+                    </button>
+                    <div class="lang-dropdown" id="languageDropdown">
+                        <div class="lang-option" data-lang="pt">
+                            <img src="assets/flags/br.svg" alt="PT" class="flag">
+                            <span>Português</span>
+                        </div>
+                        <div class="lang-option" data-lang="en">
+                            <img src="assets/flags/us.svg" alt="EN" class="flag">
+                            <span>English</span>
+                        </div>
+                        <div class="lang-option" data-lang="zh">
+                            <img src="assets/flags/cn.svg" alt="中文" class="flag">
+                            <span>中文</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status da Rede -->
+                <div class="network-status" id="networkStatus">
+                    <div class="network-indicator offline">
+                        <div class="status-dot"></div>
+                        <span data-lang="network.disconnected">Desconectado</span>
+                    </div>
+                </div>
+
+                <!-- Botão de Conectar Carteira -->
+                <button class="btn-connect" id="connectWallet">
+                    <i data-lucide="wallet"></i>
+                    <span data-lang="wallet.connect">Conectar Carteira</span>
+                </button>
+
+                <!-- Menu Admin -->
+                <a href="admin.html" class="btn-admin" title="Painel Admin">
+                    <i data-lucide="settings"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

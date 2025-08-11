@@ -1,0 +1,11 @@
+﻿CHECKLIST DE INSTALAÃ‡ÃƒO:
+
+[ ] Servidor HTTPS funcionando
+[ ] Upload de todos os arquivos
+[ ] Deploy do contrato TokenFactory.sol
+[ ] Configurar endereÃ§o em assets/js/web3.js
+[ ] Testar conexÃ£o MetaMask
+[ ] Criar token de teste
+[ ] Verificar se funcionou
+
+Se tudo funcionar, estÃ¡ pronto para usar!
