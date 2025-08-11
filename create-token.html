@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Token - SCCafé</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/pages.css">
+    <link rel="stylesheet" href="assets/css/factory.css">
+    
+    <!-- Ícones -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .create-page {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: 2rem 0;
+        }
+
+        .create-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .create-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .create-header .highlight {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .create-header p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 100;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 0.75rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+            transform: translateX(-2px);
+        }
+
+        .wallet-check {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .wallet-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-connected {
+            background: #22c55e;
+            color: white;
+        }
+
+        .status-disconnected {
+            background: #ef4444;
+            color: white;
+        }
+
+        .wallet-info {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .wallet-details {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .wallet-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .network-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .network-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+        }
+
+        @media (max-width: 768px) {
+            .create-page {
+                padding: 1rem 0;
+            }
+            
+            .create-header h1 {
+                font-size: 2rem;
+            }
+            
+            .back-button {
+                position: static;
+                margin: 1rem;
+                align-self: flex-start;
+            }
+            
+            .wallet-check {
+                margin: 0 1rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body class="create-page">
+    <!-- Back Button -->
+    <a href="index.html" class="back-button">
+        <i data-lucide="arrow-left"></i>
+        Voltar
+    </a>
+
+    <!-- Header -->
+    <div class="container">
+        <div class="create-header">
+            <h1>
+                Criar <span class="highlight">Novo Token</span>
+            </h1>
+            <p>
+                Configure seu token personalizado com endereço único usando tecnologia CREATE2. 
+                Processo simples e seguro em poucos passos.
+            </p>
+        </div>
+
+        <!-- Wallet Check -->
+        <div class="wallet-check">
+            <div class="wallet-status">
+                <div class="status-icon" id="walletStatusIcon">
+                    <i data-lucide="wallet"></i>
+                </div>
+                <span id="walletStatusText">Verificando conexão...</span>
+            </div>
+            
+            <div id="walletConnected" class="wallet-info" style="display: none;">
+                <div class="wallet-details">
+                    <div class="wallet-avatar" id="walletAvatar">A</div>
+                    <div>
+                        <div id="walletAddress">0x1234...5678</div>
+                        <div class="network-info">
+                            <div class="network-dot"></div>
+                            <span id="networkName">BSC Testnet</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-outline btn-sm" id="changeWallet">
+                    Trocar Carteira
+                </button>
+            </div>
+            
+            <div id="walletDisconnected" style="display: none;">
+                <p>Conecte sua carteira para começar a criar tokens</p>
+                <button class="btn btn-primary" id="connectWallet">
+                    <i data-lucide="wallet"></i>
+                    Conectar Carteira
+                </button>
+            </div>
+        </div>
+
+        <!-- Token Factory -->
+        <div id="tokenFactory" style="display: none;">
+            <!-- Factory será renderizada aqui -->
+        </div>
+
+        <!-- Loading State -->
+        <div id="factoryLoading" class="empty-state" style="display: none;">
+            <div class="spinner"></div>
+            <p>Carregando configurações...</p>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/mockAPI.js"></script>
+    <script src="assets/js/web3.js"></script>
+    <script src="assets/js/pricing.js"></script>
+    <script src="assets/js/create2.js"></script>
+    <script src="assets/js/tokenCreationFactory.js"></script>
+    
+    <script>
+        // Create Token App
+        class CreateTokenApp {
+            constructor() {
+                this.walletConnected = false;
+                this.userAddress = null;
+                this.currentNetwork = null;
+                this.factory = null;
+                
+                this.init();
+            }
+            
+            async init() {
+                // Verificar conexão da carteira
+                await this.checkWalletConnection();
+                
+                // Configurar event listeners
+                this.setupEventListeners();
+                
+                // Inicializar ícones
+                lucide.createIcons();
+                
+                // Inicializar factory se conectado
+                if (this.walletConnected) {
+                    await this.initFactory();
+                }
+            }
+            
+            async checkWalletConnection() {
+                this.updateWalletStatus('Verificando conexão...', 'checking');
+                
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                        
+                        if (accounts.length > 0) {
+                            this.userAddress = accounts[0];
+                            this.walletConnected = true;
+                            await this.detectNetwork();
+                            this.updateWalletUI();
+                        } else {
+                            this.updateWalletStatus('Carteira não conectada', 'disconnected');
+                            this.showConnectWallet();
+                        }
+                    } catch (error) {
+                        console.error('Erro ao verificar carteira:', error);
+                        this.updateWalletStatus('Erro ao verificar carteira', 'error');
+                        this.showConnectWallet();
+                    }
+                } else {
+                    this.updateWalletStatus('MetaMask não encontrado', 'error');
+                    this.showInstallWallet();
+                }
+            }
+            
+            async detectNetwork() {
+                try {
+                    const chainId = await window.ethereum.request({ method: 'eth_chainId' });
+                    const networkId = parseInt(chainId, 16);
+                    
+                    const networks = {
+                        1: 'Ethereum Mainnet',
+                        56: 'BSC Mainnet',
+                        97: 'BSC Testnet',
+                        137: 'Polygon Mainnet',
+                        80001: 'Polygon Testnet'
+                    };
+                    
+                    this.currentNetwork = {
+                        id: networkId,
+                        name: networks[networkId] || `Rede ${networkId}`
+                    };
+                } catch (error) {
+                    console.error('Erro ao detectar rede:', error);
+                    this.currentNetwork = { id: 0, name: 'Desconhecida' };
+                }
+            }
+            
+            updateWalletStatus(text, status) {
+                const statusIcon = document.getElementById('walletStatusIcon');
+                const statusText = document.getElementById('walletStatusText');
+                
+                if (statusText) statusText.textContent = text;
+                
+                if (statusIcon) {
+                    statusIcon.className = 'status-icon';
+                    
+                    switch (status) {
+                        case 'connected':
+                            statusIcon.classList.add('status-connected');
+                            statusIcon.innerHTML = '<i data-lucide="check"></i>';
+                            break;
+                        case 'disconnected':
+                        case 'error':
+                            statusIcon.classList.add('status-disconnected');
+                            statusIcon.innerHTML = '<i data-lucide="x"></i>';
+                            break;
+                        default:
+                            statusIcon.innerHTML = '<i data-lucide="wallet"></i>';
+                    }
+                }
+                
+                lucide.createIcons();
+            }
+            
+            updateWalletUI() {
+                if (this.walletConnected) {
+                    this.updateWalletStatus('Carteira conectada', 'connected');
+                    
+                    // Atualizar informações da carteira
+                    const walletAvatar = document.getElementById('walletAvatar');
+                    const walletAddress = document.getElementById('walletAddress');
+                    const networkName = document.getElementById('networkName');
+                    
+                    if (walletAvatar) {
+                        walletAvatar.textContent = this.userAddress.slice(2, 3).toUpperCase();
+                    }
+                    
+                    if (walletAddress) {
+                        walletAddress.textContent = `${this.userAddress.slice(0, 6)}...${this.userAddress.slice(-4)}`;
+                    }
+                    
+                    if (networkName && this.currentNetwork) {
+                        networkName.textContent = this.currentNetwork.name;
+                    }
+                    
+                    // Mostrar seção conectada
+                    document.getElementById('walletConnected').style.display = 'flex';
+                    document.getElementById('walletDisconnected').style.display = 'none';
+                } else {
+                    this.showConnectWallet();
+                }
+            }
+            
+            showConnectWallet() {
+                document.getElementById('walletConnected').style.display = 'none';
+                document.getElementById('walletDisconnected').style.display = 'block';
+                document.getElementById('tokenFactory').style.display = 'none';
+            }
+            
+            showInstallWallet() {
+                const disconnectedDiv = document.getElementById('walletDisconnected');
+                if (disconnectedDiv) {
+                    disconnectedDiv.innerHTML = `
+                        <p>MetaMask não foi encontrado. Instale a extensão para continuar.</p>
+                        <a href="https://metamask.io/download/" target="_blank" class="btn btn-primary">
+                            <i data-lucide="download"></i>
+                            Instalar MetaMask
+                        </a>
+                    `;
+                }
+                this.showConnectWallet();
+            }
+            
+            async connectWallet() {
+                try {
+                    this.updateWalletStatus('Conectando...', 'checking');
+                    
+                    const accounts = await window.ethereum.request({ 
+                        method: 'eth_requestAccounts' 
+                    });
+                    
+                    if (accounts.length > 0) {
+                        this.userAddress = accounts[0];
+                        this.walletConnected = true;
+                        await this.detectNetwork();
+                        this.updateWalletUI();
+                        await this.initFactory();
+                    }
+                } catch (error) {
+                    console.error('Erro ao conectar carteira:', error);
+                    this.updateWalletStatus('Erro ao conectar', 'error');
+                    
+                    if (error.code === 4001) {
+                        this.showToast('Conexão cancelada pelo usuário', 'warning');
+                    } else {
+                        this.showToast('Erro ao conectar carteira', 'error');
+                    }
+                }
+            }
+            
+            async initFactory() {
+                try {
+                    document.getElementById('factoryLoading').style.display = 'block';
+                    document.getElementById('tokenFactory').style.display = 'none';
+                    
+                    // Carregar configurações
+                    await this.loadFactoryConfig();
+                    
+                    // Inicializar factory
+                    this.factory = new TokenCreationFactory();
+                    
+                    // Mostrar factory
+                    document.getElementById('tokenFactory').style.display = 'block';
+                    document.getElementById('factoryLoading').style.display = 'none';
+                    
+                } catch (error) {
+                    console.error('Erro ao inicializar factory:', error);
+                    this.showToast('Erro ao carregar configurações', 'error');
+                    document.getElementById('factoryLoading').style.display = 'none';
+                }
+            }
+            
+            async loadFactoryConfig() {
+                // Carregar configurações da API
+                const response = await fetch('/api/admin/network-config');
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error(data.error || 'Erro ao carregar configurações');
+                }
+                
+                // Armazenar configurações globalmente
+                window.factoryConfig = data;
+            }
+            
+            setupEventListeners() {
+                // Conectar carteira
+                document.getElementById('connectWallet')?.addEventListener('click', () => {
+                    this.connectWallet();
+                });
+                
+                // Trocar carteira
+                document.getElementById('changeWallet')?.addEventListener('click', () => {
+                    this.disconnectWallet();
+                });
+                
+                // Eventos da rede
+                if (window.ethereum) {
+                    window.ethereum.on('accountsChanged', (accounts) => {
+                        if (accounts.length === 0) {
+                            this.disconnectWallet();
+                        } else {
+                            this.userAddress = accounts[0];
+                            this.updateWalletUI();
+                        }
+                    });
+                    
+                    window.ethereum.on('chainChanged', () => {
+                        window.location.reload();
+                    });
+                }
+            }
+            
+            disconnectWallet() {
+                this.walletConnected = false;
+                this.userAddress = null;
+                this.currentNetwork = null;
+                this.factory = null;
+                
+                this.updateWalletStatus('Carteira desconectada', 'disconnected');
+                this.showConnectWallet();
+            }
+            
+            showToast(message, type = 'info') {
+                // Implementar sistema de toast
+                console.log(`Toast [${type}]:`, message);
+            }
+        }
+        
+        // Inicializar aplicação
+        document.addEventListener('DOMContentLoaded', () => {
+            new CreateTokenApp();
+        });
+    </script>
+</body>
+</html>

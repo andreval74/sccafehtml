@@ -62,10 +62,53 @@ const App = {
   async initializeSystems() {
     DebugUtils.log('⚙️ Inicializando sistemas...');
     
+    // Inicializar gerenciadores dinâmicos
+    await this.initializeManagers();
+    
     // Web3 já é inicializado automaticamente
     // Outros sistemas podem ser adicionados aqui
     
     DebugUtils.log('✅ Sistemas inicializados');
+  },
+  
+  // Inicializar gerenciadores dinâmicos
+  async initializeManagers() {
+    DebugUtils.log('🔧 Inicializando gerenciadores...');
+    
+    try {
+      // PricingManager
+      if (typeof PricingManager !== 'undefined') {
+        window.pricingManager = new PricingManager();
+        await window.pricingManager.loadPricing();
+        DebugUtils.log('✅ PricingManager inicializado');
+      }
+      
+      // CREATE2Manager
+      if (typeof CREATE2Manager !== 'undefined') {
+        window.create2Manager = new CREATE2Manager();
+        DebugUtils.log('✅ CREATE2Manager inicializado');
+      }
+      
+      // TokenFactory
+      if (typeof TokenFactory !== 'undefined') {
+        window.tokenFactory = new TokenFactory();
+        DebugUtils.log('✅ TokenFactory inicializado');
+      }
+      
+      // Disponibilizar globalmente
+      window.SCCafe = {
+        app: this,
+        managers: {
+          pricing: window.pricingManager,
+          create2: window.create2Manager,
+          tokenFactory: window.tokenFactory,
+          web3: Web3Manager
+        }
+      };
+      
+    } catch (error) {
+      DebugUtils.error('❌ Erro ao inicializar gerenciadores:', error);
+    }
   },
   
   // Aplicar configurações
@@ -97,6 +140,9 @@ const App = {
   
   // Configurar comportamentos globais
   setupGlobalBehaviors() {
+    
+    // Event listeners para navegação
+    this.setupNavigationListeners();
     
     // Capturar erros globais
     window.addEventListener('error', (event) => {
@@ -131,6 +177,101 @@ const App = {
     window.addEventListener('scroll', TimingUtils.throttle(() => {
       this.onScroll();
     }, 16)); // ~60fps
+  },
+  
+  // Configurar listeners de navegação
+  setupNavigationListeners() {
+    // Botões de CTA
+    const startCreatingBtn = document.getElementById('startCreating');
+    if (startCreatingBtn) {
+      startCreatingBtn.addEventListener('click', () => {
+        this.redirectToCreateToken();
+      });
+    }
+    
+    const learnMoreBtn = document.getElementById('learnMore');
+    if (learnMoreBtn) {
+      learnMoreBtn.addEventListener('click', () => {
+        this.scrollToSection('how-it-works');
+      });
+    }
+    
+    const ctaStartBtn = document.getElementById('ctaStart');
+    if (ctaStartBtn) {
+      ctaStartBtn.addEventListener('click', () => {
+        this.redirectToCreateToken();
+      });
+    }
+    
+    // Links para dashboard
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('[data-action="dashboard"]')) {
+        e.preventDefault();
+        this.redirectToDashboard();
+      }
+      
+      if (e.target.closest('[data-action="create-token"]')) {
+        e.preventDefault();
+        this.redirectToCreateToken();
+      }
+    });
+    
+    // Navegação suave para âncoras
+    document.addEventListener('click', (e) => {
+      const link = e.target.closest('a[href^="#"]');
+      if (link) {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        this.scrollToSection(targetId);
+      }
+    });
+    
+    // Hash navigation
+    window.addEventListener('hashchange', () => {
+      this.handleHashChange();
+    });
+  },
+  
+  // Redirecionar para criação de token
+  redirectToCreateToken() {
+    if (window.location.pathname.includes('create-token.html')) {
+      this.scrollToSection('tokenFactory');
+    } else {
+      window.location.href = 'create-token.html';
+    }
+  },
+  
+  // Redirecionar para dashboard
+  redirectToDashboard() {
+    window.location.href = 'dashboard.html';
+  },
+  
+  // Scroll suave para seção
+  scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  },
+  
+  // Lidar com mudanças de hash
+  handleHashChange() {
+    const hash = window.location.hash.substring(1);
+    if (hash) {
+      switch (hash) {
+        case 'create':
+          this.redirectToCreateToken();
+          break;
+        case 'dashboard':
+          this.redirectToDashboard();
+          break;
+        default:
+          this.scrollToSection(hash);
+      }
+    }
   },
   
   // Página ficou visível

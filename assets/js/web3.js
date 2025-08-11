@@ -1,16 +1,59 @@
 
 /* ===================================
-   WEB3 MANAGER - SCCAFÉ
+   WEB3 MANAGER - SCCAFÉ DINÂMICO
+   Sistema baseado no 02sccafe repository
    =================================== */
+
+// Configuração dinâmica das redes
+const NETWORK_CONFIGS = {
+  1: {
+    name: 'Ethereum Mainnet',
+    rpc: 'https://eth-mainnet.public.blastapi.io',
+    explorer: 'https://etherscan.io',
+    currency: 'ETH',
+    isTestnet: false,
+    factoryAddress: null // Será configurado dinamicamente
+  },
+  56: {
+    name: 'BSC Mainnet', 
+    rpc: 'https://bsc-dataseed1.binance.org/',
+    explorer: 'https://bscscan.com',
+    currency: 'BNB',
+    isTestnet: false,
+    factoryAddress: null
+  },
+  97: {
+    name: 'BSC Testnet',
+    rpc: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
+    explorer: 'https://testnet.bscscan.com',
+    currency: 'tBNB', 
+    isTestnet: true,
+    factoryAddress: null
+  },
+  137: {
+    name: 'Polygon Mainnet',
+    rpc: 'https://polygon-rpc.com',
+    explorer: 'https://polygonscan.com',
+    currency: 'MATIC',
+    isTestnet: false,
+    factoryAddress: null
+  }
+};
 
 // Gerenciador principal do Web3
 const Web3Manager = {
+  
+  currentNetwork: null,
+  currentProvider: null,
+  userAddress: null,
+  factoryContract: null,
   
   // Inicializar Web3
   async init() {
     try {
       await this.detectProvider();
       await this.checkConnection();
+      await this.loadNetworkConfig();
       this.setupEventListeners();
       
       DebugUtils.log('✅ Web3 inicializado');
@@ -19,20 +62,156 @@ const Web3Manager = {
     }
   },
   
+  
   // Detectar provedor Web3
   async detectProvider() {
     if (typeof window.ethereum !== 'undefined') {
       window.web3 = new Web3(window.ethereum);
+      this.currentProvider = window.ethereum;
       DebugUtils.log('🦊 MetaMask detectado');
       return true;
     } else if (typeof window.web3 !== 'undefined') {
       window.web3 = new Web3(window.web3.currentProvider);
+      this.currentProvider = window.web3.currentProvider;
       DebugUtils.log('🌐 Web3 Provider detectado');
       return true;
     } else {
       DebugUtils.warn('⚠️ Nenhum provedor Web3 detectado');
       this.updateConnectionStatus(false, 'Instale MetaMask ou Trust Wallet');
       return false;
+    }
+  },
+
+  // Carregar configurações da rede do servidor/admin
+  async loadNetworkConfig() {
+    try {
+      // Carrega configurações dinâmicas do admin
+      const response = await fetch('/api/admin/network-config');
+      const config = await response.json();
+      
+      if (config.success) {
+        // Atualiza endereços das factories dinamicamente
+        Object.keys(config.networks).forEach(chainId => {
+          if (NETWORK_CONFIGS[chainId]) {
+            NETWORK_CONFIGS[chainId].factoryAddress = config.networks[chainId].factoryAddress;
+            NETWORK_CONFIGS[chainId].pricing = config.networks[chainId].pricing;
+          }
+        });
+        
+        DebugUtils.log('✅ Configurações de rede carregadas dinamicamente');
+      }
+    } catch (error) {
+      DebugUtils.warn('⚠️ Usando configuração local de rede:', error);
+    }
+  },
+
+  // Conectar carteira
+  async connectWallet() {
+    try {
+      if (!this.currentProvider) {
+        throw new Error('Nenhum provedor Web3 encontrado');
+      }
+
+      // Solicitar conexão
+      const accounts = await this.currentProvider.request({
+        method: 'eth_requestAccounts'
+      });
+
+      if (accounts.length > 0) {
+        this.userAddress = accounts[0];
+        await this.detectNetwork();
+        await this.updateConnectionStatus(true, this.userAddress);
+        
+        // Carregar factory contract da rede atual
+        await this.loadFactoryContract();
+        
+        DebugUtils.log('✅ Carteira conectada:', this.userAddress);
+        return {
+          address: this.userAddress,
+          network: this.currentNetwork
+        };
+      }
+    } catch (error) {
+      DebugUtils.error('❌ Erro ao conectar carteira:', error);
+      throw error;
+    }
+  },
+
+  // Detectar rede atual
+  async detectNetwork() {
+    try {
+      const chainId = await this.currentProvider.request({
+        method: 'eth_chainId'
+      });
+      
+      const numChainId = parseInt(chainId, 16);
+      this.currentNetwork = NETWORK_CONFIGS[numChainId];
+      
+      if (!this.currentNetwork) {
+        throw new Error(`Rede não suportada: ${numChainId}`);
+      }
+      
+      DebugUtils.log('🌐 Rede detectada:', this.currentNetwork.name);
+      
+      // Verificar se é testnet e avisar usuário
+      if (this.currentNetwork.isTestnet) {
+        this.showTestnetWarning();
+      }
+      
+      return this.currentNetwork;
+    } catch (error) {
+      DebugUtils.error('❌ Erro ao detectar rede:', error);
+      throw error;
+    }
+  },
+
+  // Carregar contrato factory da rede atual
+  async loadFactoryContract() {
+    if (!this.currentNetwork || !this.currentNetwork.factoryAddress) {
+      DebugUtils.warn('⚠️ Factory address não configurado para esta rede');
+      return;
+    }
+
+    try {
+      const factoryABI = await this.getFactoryABI();
+      this.factoryContract = new window.web3.eth.Contract(
+        factoryABI, 
+        this.currentNetwork.factoryAddress
+      );
+      
+      DebugUtils.log('✅ Factory contract carregado:', this.currentNetwork.factoryAddress);
+    } catch (error) {
+      DebugUtils.error('❌ Erro ao carregar factory contract:', error);
+    }
+  },
+
+  // Obter ABI do factory (pode vir do servidor ou ser hardcoded)
+  async getFactoryABI() {
+    try {
+      const response = await fetch('/api/contracts/factory-abi');
+      const data = await response.json();
+      return data.abi;
+    } catch (error) {
+      // Fallback para ABI básico
+      return [
+        {
+          "inputs": [
+            {"name": "name", "type": "string"},
+            {"name": "symbol", "type": "string"}, 
+            {"name": "totalSupply", "type": "uint256"},
+            {"name": "salt", "type": "bytes32"}
+          ],
+          "name": "createToken",
+          "outputs": [{"name": "", "type": "address"}],
+          "type": "function"
+        },
+        {
+          "inputs": [{"name": "salt", "type": "bytes32"}],
+          "name": "predictAddress", 
+          "outputs": [{"name": "", "type": "address"}],
+          "type": "function"
+        }
+      ];
     }
   },
   

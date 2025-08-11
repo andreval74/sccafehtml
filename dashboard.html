@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - SCCafé</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/pages.css">
+    
+    <!-- Ícones -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .dashboard-page {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .dashboard-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .dashboard-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+        }
+
+        .dashboard-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 500;
+        }
+
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .tokens-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .create-token-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .create-token-btn:hover {
+            background: var(--accent-secondary);
+            transform: translateY(-1px);
+        }
+
+        .tokens-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .token-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .token-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+        }
+
+        .token-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .token-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .token-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .token-details h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .token-symbol {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .token-status {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .status-verified {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+        }
+
+        .status-pending {
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+        }
+
+        .token-address {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .address-text {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 0.25rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-primary);
+            background: var(--bg-primary);
+        }
+
+        .token-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .meta-label {
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .meta-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .token-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-primary);
+            border-color: var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            border: 2px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+            
+            .tokens-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body class="dashboard-page">
+    <!-- Header -->
+    <header class="dashboard-header">
+        <nav class="dashboard-nav">
+            <div class="dashboard-logo">
+                <i data-lucide="coffee"></i>
+                <span>SCCafé</span>
+            </div>
+            
+            <div class="dashboard-user">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <span id="userAddress">Conectar Carteira</span>
+                </div>
+                <button class="btn btn-outline" id="disconnectBtn" style="display: none;">
+                    <i data-lucide="log-out"></i>
+                    Desconectar
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-content">
+        <!-- Stats Grid -->
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: #3b82f6;">
+                        <i data-lucide="coins"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalTokens">-</div>
+                <div class="stat-label">Tokens Criados</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: #10b981;">
+                        <i data-lucide="check-circle"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="verifiedTokens">-</div>
+                <div class="stat-label">Verificados</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: #f59e0b;">
+                        <i data-lucide="clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="pendingTokens">-</div>
+                <div class="stat-label">Pendentes</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon" style="background: #ef4444;">
+                        <i data-lucide="dollar-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalSpent">$-</div>
+                <div class="stat-label">Total Gasto</div>
+            </div>
+        </div>
+
+        <!-- Tokens Section -->
+        <section class="tokens-section">
+            <div class="section-header">
+                <h2 class="section-title">Meus Tokens</h2>
+                <button class="create-token-btn" id="createNewToken">
+                    <i data-lucide="plus"></i>
+                    Criar Novo Token
+                </button>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="tokensLoading" class="empty-state" style="display: none;">
+                <div class="spinner"></div>
+                <p>Carregando seus tokens...</p>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="tokensEmpty" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i data-lucide="coins"></i>
+                </div>
+                <h3>Nenhum token criado ainda</h3>
+                <p>Crie seu primeiro token personalizado com endereço único!</p>
+                <button class="btn btn-primary" id="createFirstToken">
+                    <i data-lucide="plus"></i>
+                    Criar Primeiro Token
+                </button>
+            </div>
+            
+            <!-- Tokens Grid -->
+            <div id="tokensGrid" class="tokens-grid">
+                <!-- Tokens serão carregados aqui dinamicamente -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/mockAPI.js"></script>
+    <script src="assets/js/web3.js"></script>
+    
+    <script>
+        // Dashboard App
+        class DashboardApp {
+            constructor() {
+                this.userAddress = null;
+                this.tokens = [];
+                this.stats = {
+                    total: 0,
+                    verified: 0,
+                    pending: 0,
+                    totalSpent: 0
+                };
+                
+                this.init();
+            }
+            
+            async init() {
+                // Verificar conexão da carteira
+                await this.checkWalletConnection();
+                
+                // Configurar event listeners
+                this.setupEventListeners();
+                
+                // Carregar dados
+                if (this.userAddress) {
+                    await this.loadUserData();
+                }
+                
+                // Inicializar ícones
+                lucide.createIcons();
+            }
+            
+            async checkWalletConnection() {
+                if (typeof window.ethereum !== 'undefined') {
+                    try {
+                        const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+                        if (accounts.length > 0) {
+                            this.userAddress = accounts[0];
+                            this.updateUserInfo();
+                        }
+                    } catch (error) {
+                        console.error('Erro ao verificar conexão:', error);
+                    }
+                }
+            }
+            
+            setupEventListeners() {
+                // Botão de desconectar
+                document.getElementById('disconnectBtn')?.addEventListener('click', () => {
+                    this.disconnect();
+                });
+                
+                // Botões de criar token
+                document.getElementById('createNewToken')?.addEventListener('click', () => {
+                    this.redirectToCreateToken();
+                });
+                
+                document.getElementById('createFirstToken')?.addEventListener('click', () => {
+                    this.redirectToCreateToken();
+                });
+            }
+            
+            updateUserInfo() {
+                const userAvatar = document.getElementById('userAvatar');
+                const userAddress = document.getElementById('userAddress');
+                const disconnectBtn = document.getElementById('disconnectBtn');
+                
+                if (this.userAddress) {
+                    userAvatar.textContent = this.userAddress.slice(2, 3).toUpperCase();
+                    userAddress.textContent = `${this.userAddress.slice(0, 6)}...${this.userAddress.slice(-4)}`;
+                    disconnectBtn.style.display = 'block';
+                } else {
+                    userAvatar.textContent = 'A';
+                    userAddress.textContent = 'Conectar Carteira';
+                    disconnectBtn.style.display = 'none';
+                }
+            }
+            
+            async loadUserData() {
+                this.showLoading();
+                
+                try {
+                    // Carregar tokens do usuário
+                    const response = await fetch('/api/user/tokens', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.tokens = data.tokens || [];
+                        this.calculateStats();
+                        this.renderTokens();
+                        this.updateStats();
+                    } else {
+                        this.showError('Erro ao carregar tokens: ' + data.error);
+                    }
+                } catch (error) {
+                    console.error('Erro ao carregar dados:', error);
+                    this.showError('Erro ao carregar dados do usuário');
+                } finally {
+                    this.hideLoading();
+                }
+            }
+            
+            calculateStats() {
+                this.stats.total = this.tokens.length;
+                this.stats.verified = this.tokens.filter(token => token.verified).length;
+                this.stats.pending = this.tokens.filter(token => !token.verified).length;
+                
+                // Calcular gasto total (mockado)
+                this.stats.totalSpent = this.tokens.reduce((total, token) => {
+                    const basePrice = token.customSuffix === 'CAFE' ? 5 : 
+                                     token.customSuffix && token.customSuffix !== 'CAFE' ? 10 : 0;
+                    return total + basePrice;
+                }, 0);
+            }
+            
+            updateStats() {
+                document.getElementById('totalTokens').textContent = this.stats.total;
+                document.getElementById('verifiedTokens').textContent = this.stats.verified;
+                document.getElementById('pendingTokens').textContent = this.stats.pending;
+                document.getElementById('totalSpent').textContent = `$${this.stats.totalSpent.toFixed(2)}`;
+            }
+            
+            renderTokens() {
+                const tokensGrid = document.getElementById('tokensGrid');
+                const tokensEmpty = document.getElementById('tokensEmpty');
+                
+                if (this.tokens.length === 0) {
+                    tokensGrid.style.display = 'none';
+                    tokensEmpty.style.display = 'block';
+                    return;
+                }
+                
+                tokensGrid.style.display = 'grid';
+                tokensEmpty.style.display = 'none';
+                
+                tokensGrid.innerHTML = this.tokens.map(token => this.createTokenCard(token)).join('');
+                
+                // Adicionar event listeners
+                this.setupTokenActions();
+            }
+            
+            createTokenCard(token) {
+                const statusClass = token.verified ? 'status-verified' : 'status-pending';
+                const statusText = token.verified ? 'Verificado' : 'Pendente';
+                const statusIcon = token.verified ? 'check-circle' : 'clock';
+                
+                return `
+                    <div class="token-card">
+                        <div class="token-header">
+                            <div class="token-info">
+                                <div class="token-icon">
+                                    ${token.symbol.substring(0, 2)}
+                                </div>
+                                <div class="token-details">
+                                    <h3>${token.name}</h3>
+                                    <div class="token-symbol">${token.symbol}</div>
+                                </div>
+                            </div>
+                            <div class="token-status ${statusClass}">
+                                <i data-lucide="${statusIcon}"></i>
+                                ${statusText}
+                            </div>
+                        </div>
+                        
+                        <div class="token-address">
+                            <span class="address-text">${token.address}</span>
+                            <button class="copy-btn" onclick="copyToClipboard('${token.address}')">
+                                <i data-lucide="copy"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="token-meta">
+                            <div class="meta-item">
+                                <div class="meta-label">Supply Total</div>
+                                <div class="meta-value">${formatNumber(token.totalSupply)}</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Rede</div>
+                                <div class="meta-value">${token.network}</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Sufixo</div>
+                                <div class="meta-value">${token.customSuffix || 'Nenhum'}</div>
+                            </div>
+                            <div class="meta-item">
+                                <div class="meta-label">Criado em</div>
+                                <div class="meta-value">${new Date(token.createdAt).toLocaleDateString('pt-BR')}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="token-actions">
+                            <button class="action-btn" onclick="viewOnExplorer('${token.address}')">
+                                <i data-lucide="external-link"></i>
+                                Explorer
+                            </button>
+                            <button class="action-btn" onclick="shareToken('${token.address}')">
+                                <i data-lucide="share"></i>
+                                Compartilhar
+                            </button>
+                            ${!token.verified ? `
+                                <button class="action-btn" onclick="verifyToken('${token.address}')">
+                                    <i data-lucide="shield-check"></i>
+                                    Verificar
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            setupTokenActions() {
+                // Reatualizar ícones
+                lucide.createIcons();
+            }
+            
+            showLoading() {
+                document.getElementById('tokensLoading').style.display = 'block';
+                document.getElementById('tokensGrid').style.display = 'none';
+                document.getElementById('tokensEmpty').style.display = 'none';
+            }
+            
+            hideLoading() {
+                document.getElementById('tokensLoading').style.display = 'none';
+            }
+            
+            showError(message) {
+                // Implementar toast de erro
+                console.error(message);
+            }
+            
+            disconnect() {
+                this.userAddress = null;
+                this.tokens = [];
+                this.updateUserInfo();
+                this.renderTokens();
+                this.updateStats();
+                
+                // Redirecionar para página inicial
+                window.location.href = 'index.html';
+            }
+            
+            redirectToCreateToken() {
+                window.location.href = 'index.html#create';
+            }
+        }
+        
+        // Funções globais para ações dos tokens
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                console.log('Copiado:', text);
+                // Implementar toast de sucesso
+            });
+        }
+        
+        function viewOnExplorer(address) {
+            const explorerUrl = `https://testnet.bscscan.com/address/${address}`;
+            window.open(explorerUrl, '_blank');
+        }
+        
+        function shareToken(address) {
+            const url = `${window.location.origin}/token/${address}`;
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Meu Token SCCafé',
+                    text: 'Confira meu token criado no SCCafé!',
+                    url: url
+                });
+            } else {
+                copyToClipboard(url);
+            }
+        }
+        
+        function verifyToken(address) {
+            // Implementar verificação de token
+            console.log('Verificar token:', address);
+        }
+        
+        function formatNumber(num) {
+            return new Intl.NumberFormat('pt-BR').format(num);
+        }
+        
+        // Inicializar aplicação
+        document.addEventListener('DOMContentLoaded', () => {
+            new DashboardApp();
+        });
+    </script>
+</body>
+</html>
