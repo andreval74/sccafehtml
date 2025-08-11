@@ -209,14 +209,9 @@ const App = {
         e.preventDefault();
         this.redirectToDashboard();
       }
-      
-      if (e.target.closest('[data-action="create-token"]')) {
-        e.preventDefault();
-        this.redirectToCreateToken();
-      }
     });
     
-    // Navegação suave para âncoras
+    // Navegação suave para links âncora
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a[href^="#"]');
       if (link) {
@@ -224,11 +219,6 @@ const App = {
         const targetId = link.getAttribute('href').substring(1);
         this.scrollToSection(targetId);
       }
-    });
-    
-    // Hash navigation
-    window.addEventListener('hashchange', () => {
-      this.handleHashChange();
     });
   },
   

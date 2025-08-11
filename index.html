@@ -15,6 +15,9 @@
     <!-- Ícones -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
+    <!-- Web3 -->
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -332,15 +335,8 @@
     <script src="assets/js/app.js"></script>
     
     <script>
-        // Inicializar aplicação
+        // Inicializar ícones quando DOM estiver pronto
         document.addEventListener('DOMContentLoaded', function() {
-            // Carregar includes
-            loadIncludes();
-            
-            // Inicializar componentes
-            initializeApp();
-            
-            // Inicializar ícones
             lucide.createIcons();
         });
     </script>

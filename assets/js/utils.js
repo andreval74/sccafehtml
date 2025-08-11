@@ -110,6 +110,48 @@ const DOMUtils = {
     setTimeout(() => {
       element.classList.remove(className);
     }, duration);
+  },
+  
+  // Fade in elemento
+  fadeIn(element, duration = 300) {
+    if (!element) return;
+    element.style.opacity = '0';
+    element.style.display = 'block';
+    
+    let start = null;
+    const animate = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = (timestamp - start) / duration;
+      
+      element.style.opacity = Math.min(progress, 1);
+      
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
+  },
+  
+  // Fade out elemento
+  fadeOut(element, duration = 300) {
+    if (!element) return;
+    
+    let start = null;
+    const animate = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = (timestamp - start) / duration;
+      
+      element.style.opacity = 1 - Math.min(progress, 1);
+      
+      if (progress >= 1) {
+        element.style.display = 'none';
+      } else {
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    requestAnimationFrame(animate);
   }
 };
 
