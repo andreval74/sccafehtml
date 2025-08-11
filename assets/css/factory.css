@@ -6,17 +6,17 @@
 .factory-container {
     max-width: 800px;
     margin: 0 auto;
-    background: var(--bg-secondary);
+    background: var(--color-background-card);
     border-radius: 20px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--color-border);
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-lg);
 }
 
 .factory-header {
     padding: 2rem;
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-    color: white;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: var(--color-background);
 }
 
 .factory-progress {
@@ -59,7 +59,7 @@
 
 .progress-step.active .step-number {
     background: white;
-    color: var(--accent-primary);
+    color: var(--color-primary);
 }
 
 .step-label {
@@ -113,12 +113,12 @@
 .step-header h2 {
     font-size: 1.75rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 0.5rem;
 }
 
 .step-header p {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 1rem;
 }
 
@@ -143,16 +143,16 @@
 
 .form-group label {
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--color-text);
 }
 
 .form-group input,
 .form-group select {
     padding: 0.75rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--color-border);
     border-radius: 12px;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    background: var(--color-background);
+    color: var(--color-text);
     font-size: 1rem;
     transition: all 0.3s ease;
 }
@@ -160,18 +160,18 @@
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-group small {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 0.875rem;
 }
 
 .preview-card {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 16px;
     padding: 1.5rem;
 }
@@ -181,7 +181,7 @@
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 1rem;
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-weight: 500;
 }
 
@@ -195,7 +195,7 @@
     width: 60px;
     height: 60px;
     border-radius: 16px;
-    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,17 +207,17 @@
 .token-info-preview h4 {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 0.25rem;
 }
 
 .token-info-preview p {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-weight: 500;
 }
 
 .token-info-preview small {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 0.875rem;
 }
 
@@ -229,20 +229,20 @@
 }
 
 .address-option {
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--color-border);
     border-radius: 16px;
     padding: 1.5rem;
-    background: var(--bg-primary);
+    background: var(--color-background);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .address-option:hover {
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
 }
 
 .address-option.selected {
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
     background: rgba(59, 130, 246, 0.05);
 }
 
@@ -266,18 +266,18 @@
 .option-info h4 {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 0.25rem;
 }
 
 .option-info p {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 0.875rem;
 }
 
 .option-price {
     padding: 0.25rem 0.75rem;
-    background: var(--accent-primary);
+    background: var(--color-primary);
     color: white;
     border-radius: 8px;
     font-size: 0.875rem;
@@ -289,11 +289,11 @@
 .option-example {
     font-family: 'Monaco', 'Courier New', monospace;
     font-size: 0.875rem;
-    background: var(--bg-secondary);
+    background: var(--color-background-card);
     padding: 0.75rem;
     border-radius: 8px;
-    color: var(--accent-primary);
-    border: 1px solid var(--border-color);
+    color: var(--color-primary);
+    border: 1px solid var(--color-border);
 }
 
 .option-custom {
@@ -303,16 +303,16 @@
 .option-custom input {
     width: 100%;
     padding: 0.75rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--color-border);
     border-radius: 8px;
-    background: var(--bg-secondary);
-    color: var(--text-primary);
+    background: var(--color-background-card);
+    color: var(--color-text);
     font-family: 'Monaco', 'Courier New', monospace;
 }
 
 .address-preview {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 16px;
     padding: 1.5rem;
 }
@@ -328,15 +328,15 @@
 .predicted-address code {
     flex: 1;
     padding: 0.75rem;
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    background: var(--color-background-card);
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     font-family: 'Monaco', 'Courier New', monospace;
-    color: var(--accent-primary);
+    color: var(--color-primary);
 }
 
 .address-info {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 0.875rem;
 }
 
@@ -349,22 +349,22 @@
 
 .feature-card {
     position: relative;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--color-border);
     border-radius: 16px;
     padding: 1.5rem;
-    background: var(--bg-primary);
+    background: var(--color-background);
     cursor: pointer;
     transition: all 0.3s ease;
     overflow: hidden;
 }
 
 .feature-card:hover {
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
     transform: translateY(-2px);
 }
 
 .feature-card.selected {
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
     background: rgba(59, 130, 246, 0.05);
 }
 
@@ -390,13 +390,13 @@
 .feature-header label h4 {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 0.25rem;
 }
 
 .feature-price {
     padding: 0.125rem 0.5rem;
-    background: var(--accent-primary);
+    background: var(--color-primary);
     color: white;
     border-radius: 6px;
     font-size: 0.75rem;
@@ -404,7 +404,7 @@
 }
 
 .feature-card p {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-size: 0.875rem;
     margin-bottom: 1rem;
 }
@@ -419,7 +419,7 @@
 
 .feature-card.selected .feature-icon {
     opacity: 0.6;
-    color: var(--accent-primary);
+    color: var(--color-primary);
 }
 
 .conditional-configs {
@@ -427,10 +427,10 @@
 }
 
 .config-section {
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     padding: 1.5rem;
-    background: var(--bg-primary);
+    background: var(--color-background);
     transition: all 0.3s ease;
     overflow: hidden;
 }
@@ -450,7 +450,7 @@
 .config-section h4 {
     font-size: 1.125rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 1rem;
 }
 
@@ -468,8 +468,8 @@
 }
 
 .summary-section {
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
     border-radius: 16px;
     padding: 1.5rem;
 }
@@ -477,7 +477,7 @@
 .summary-section h4 {
     font-size: 1.25rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: var(--color-text);
     margin-bottom: 1rem;
 }
 
@@ -492,7 +492,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--color-border);
 }
 
 .summary-item:last-child {
@@ -500,11 +500,11 @@
 }
 
 .summary-item span {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
 }
 
 .summary-item strong {
-    color: var(--text-primary);
+    color: var(--color-text);
     font-weight: 600;
 }
 
@@ -518,11 +518,11 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--text-primary);
+    color: var(--color-text);
 }
 
 .selected-feature i {
-    color: var(--accent-primary);
+    color: var(--color-primary);
 }
 
 .price-breakdown {
@@ -543,7 +543,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem 0 0;
-    border-top: 2px solid var(--border-color);
+    border-top: 2px solid var(--color-border);
     margin-top: 0.5rem;
     font-size: 1.125rem;
 }
@@ -557,14 +557,14 @@
     align-items: center;
     gap: 0.75rem;
     padding: 1rem;
-    border: 2px solid var(--border-color);
+    border: 2px solid var(--color-border);
     border-radius: 12px;
-    background: var(--bg-secondary);
+    background: var(--color-background-card);
     cursor: pointer;
 }
 
 .payment-option.selected {
-    border-color: var(--accent-primary);
+    border-color: var(--color-primary);
     background: rgba(59, 130, 246, 0.05);
 }
 
@@ -573,7 +573,7 @@
     border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 12px;
     padding: 1rem;
-    color: var(--text-primary);
+    color: var(--color-text);
 }
 
 .payment-info p {
@@ -587,8 +587,8 @@
 /* Factory Footer */
 .factory-footer {
     padding: 1.5rem 2rem;
-    background: var(--bg-primary);
-    border-top: 1px solid var(--border-color);
+    background: var(--color-background);
+    border-top: 1px solid var(--color-border);
 }
 
 .factory-actions {
@@ -598,7 +598,7 @@
 }
 
 .step-info {
-    color: var(--text-secondary);
+    color: var(--color-text-muted);
     font-weight: 500;
 }
 
