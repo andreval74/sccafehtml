@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/pages.css">
     <link rel="stylesheet" href="assets/css/factory.css">
+    <link rel="stylesheet" href="assets/css/token-factory.css">
     
     <!-- Ícones -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -455,6 +456,9 @@
                     
                     // Inicializar factory
                     this.factory = new TokenCreationFactory();
+                    
+                    // Disponibilizar globalmente para callbacks
+                    window.tokenFactory = this.factory;
                     
                     // Mostrar factory
                     document.getElementById('tokenFactory').style.display = 'block';

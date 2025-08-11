@@ -1,0 +1,718 @@
+/* ===================================
+   TOKEN CREATION FACTORY STYLES
+   =================================== */
+
+.factory-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--surface-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Header and Progress */
+.factory-header {
+    margin-bottom: 40px;
+}
+
+.factory-progress {
+    text-align: center;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 20px;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active {
+    opacity: 1;
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--surface-border);
+    color: var(--text-color-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.progress-step.active .step-number {
+    background: var(--primary-color);
+    color: white;
+}
+
+.step-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+}
+
+.progress-step.active .step-label {
+    color: var(--text-color);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 4px;
+    background: var(--surface-border);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* Steps Content */
+.factory-content {
+    min-height: 500px;
+}
+
+.factory-step {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.factory-step.active {
+    display: block;
+}
+
+.step-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.step-header h2 {
+    margin: 0 0 8px 0;
+    color: var(--text-color);
+}
+
+.step-header p {
+    margin: 0;
+    color: var(--text-color-secondary);
+}
+
+/* Form Styles */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+    padding: 12px 16px;
+    border: 1px solid var(--surface-border);
+    border-radius: 8px;
+    background: var(--surface-ground);
+    color: var(--text-color);
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+}
+
+.form-group small {
+    color: var(--text-color-secondary);
+    font-size: 12px;
+}
+
+/* Step 2 - Address Info */
+.address-info-box {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background: var(--primary-50);
+    border: 1px solid var(--primary-200);
+    border-radius: 12px;
+    margin-bottom: 32px;
+}
+
+.info-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-content h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-color);
+}
+
+.info-content p {
+    margin: 0;
+    color: var(--text-color-secondary);
+    line-height: 1.5;
+}
+
+.address-preview-simple {
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.preview-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.process-steps {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+}
+
+.process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+    flex: 1;
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.step-text strong {
+    display: block;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.step-text small {
+    color: var(--text-color-secondary);
+    font-size: 12px;
+}
+
+.step-arrow {
+    color: var(--text-color-secondary);
+    font-weight: bold;
+    margin: 0 8px;
+}
+
+/* Pricing */
+.pricing-info {
+    display: flex;
+    justify-content: center;
+}
+
+.price-card {
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.price-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.price-header h4 {
+    margin: 0 0 8px 0;
+    color: var(--text-color);
+}
+
+.price-amount {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--green-500);
+}
+
+.price-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price-item.total {
+    font-size: 16px;
+    padding-top: 12px;
+}
+
+/* Step 3 - Summary */
+.summary-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.summary-section {
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.summary-section h4 {
+    margin: 0 0 20px 0;
+    color: var(--text-color);
+    font-size: 18px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item label {
+    font-weight: 500;
+    color: var(--text-color-secondary);
+}
+
+.summary-item span {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.summary-item .highlight {
+    color: var(--green-500);
+    font-weight: 600;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.info-card {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: var(--surface-50);
+    border-radius: 8px;
+}
+
+.info-card i {
+    color: var(--primary-color);
+    margin-top: 2px;
+}
+
+.info-card strong {
+    display: block;
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.info-card small {
+    color: var(--text-color-secondary);
+}
+
+/* Footer Actions */
+.factory-footer {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid var(--surface-border);
+}
+
+.factory-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actions-right {
+    display: flex;
+    gap: 12px;
+}
+
+/* Deployment Progress */
+.deployment-progress {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.progress-container {
+    background: var(--surface-card);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.progress-header h3 {
+    margin: 0 0 8px 0;
+    color: var(--text-color);
+}
+
+.progress-header p {
+    margin: 0 0 40px 0;
+    color: var(--text-color-secondary);
+}
+
+.progress-steps-deploy {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 40px 0;
+}
+
+.deploy-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+.deploy-step.active {
+    opacity: 1;
+}
+
+.deploy-step.current {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.deploy-step .step-icon {
+    width: 48px;
+    height: 48px;
+    background: var(--surface-border);
+    color: var(--text-color-secondary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.deploy-step.active .step-icon {
+    background: var(--primary-color);
+    color: white;
+}
+
+.deploy-step.current .step-icon {
+    background: var(--green-500);
+    animation: pulse 2s infinite;
+}
+
+.deploy-step span {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-color-secondary);
+}
+
+.deploy-step.active span {
+    color: var(--text-color);
+}
+
+.progress-bar-deploy {
+    width: 100%;
+    height: 8px;
+    background: var(--surface-border);
+    border-radius: 4px;
+    margin: 32px 0;
+    overflow: hidden;
+}
+
+.progress-fill-deploy {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--green-500));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.progress-timer {
+    color: var(--text-color-secondary);
+    font-size: 14px;
+}
+
+/* Success Result */
+.success-container {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.success-header {
+    margin-bottom: 40px;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: var(--green-500);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+    font-size: 32px;
+}
+
+.success-header h2 {
+    margin: 0 0 8px 0;
+    color: var(--text-color);
+}
+
+.success-header p {
+    margin: 0;
+    color: var(--text-color-secondary);
+}
+
+.success-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.token-info {
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.token-info h3 {
+    margin: 0 0 16px 0;
+    color: var(--text-color);
+}
+
+.token-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat label {
+    display: block;
+    font-size: 12px;
+    color: var(--text-color-secondary);
+    margin-bottom: 4px;
+}
+
+.stat span {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.contract-info {
+    background: var(--surface-ground);
+    border: 1px solid var(--surface-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.contract-address label {
+    display: block;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 12px;
+}
+
+.address-display {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--surface-50);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.address-display code {
+    flex: 1;
+    font-family: 'Monaco', 'Menlo', monospace;
+    font-size: 14px;
+    color: var(--text-color);
+    word-break: break-all;
+}
+
+.success-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .factory-container {
+        margin: 0;
+        padding: 16px;
+        border-radius: 0;
+    }
+    
+    .progress-steps {
+        gap: 20px;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .factory-actions {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .actions-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .progress-steps-deploy {
+        gap: 16px;
+    }
+    
+    .deploy-step span {
+        font-size: 12px;
+    }
+    
+    .token-stats {
+        gap: 16px;
+    }
+    
+    .success-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 480px) {
+    .progress-steps {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .progress-steps-deploy {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .process-steps {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .step-arrow {
+        transform: rotate(90deg);
+    }
+}
